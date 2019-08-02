@@ -23,6 +23,11 @@ Each runner on the P2P network is named node in Ethereum, Nervos and BitCoin. Th
 
 In here, is give the name for this module as face-client module. The face-client module can not only be implemented by  JSONRPC. We exepct it can support TCP/IP , SPI, I2C, BLE and any different protocol. Because we exepct linux-blockchain can face different client implement by different technology, like FPGA, MCU, PLC, LabView, JavaScript, Server, desktop application, mobile, etc.	
 
+### vallet module
+You can think vallet module is like the wallet in ethereum. We don't call wallet module is because people alwasy think wallet as tool to play coin but not with the view of user experience and system integration. 
+
+Vallet is responbile to enhance user experience, security, key management, sign transaction and application side development between face-client module and different kind of client (like MCU, FPGA, web client, mobile app ,etc.)
+
 
 
 (https://hackmd.io/@FgfHJXr4TqqaJTKS4F__tw/HkgPrBbmS)
