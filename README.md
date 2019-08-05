@@ -18,7 +18,7 @@ The linux-blockchain can support different smart contract (mean different comput
 ### distributed data storage module
 Many account model blockchain can save all record of state chaning and show current state in different account. The program in smart contract is like to make a state machine with this storage. So different distributed data storage should try to support these smart contract. The input of distributed data storage are smart contract executing and consensus algorithm. It should know how to sync data for different node. The output of distributed storage is a trust and managed datas of all account.
 
-### face-client module
+### client-interface module
 Each runner on the P2P network is named node in Ethereum, Nervos and BitCoin. The runner(node) use their P2P network protocol to communicate in different node. But the node still need to face clients, So that the client can upload smart contract to the node and interact to the node. In the world of ethereum, they use JSONRPC that run on HTTP service to communicate with client.
 
 In here, is give the name for this module as face-client module. The face-client module can not only be implemented by  JSONRPC. We exepct it can support TCP/IP , SPI, I2C, BLE and any different protocol. Because we exepct linux-blockchain can face different client implement by different technology, like FPGA, MCU, PLC, LabView, JavaScript, Server, desktop application, mobile, etc.	
