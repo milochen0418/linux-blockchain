@@ -26,7 +26,10 @@ def python_object_load(filename):
         except:
             return None
     return obj2
-storage_name = 'storage.bytes' 
+
+storage_name = 'storage.bytes'
+contract_filename = 'contract.py'
+
 def make_empty_storage():
     storage = {}
     python_object_dump(storage, storage_name)
@@ -46,7 +49,7 @@ def Execute(filename):
     pass
 
 
-Execute('./test_smart_contract.py')
+Execute(contract_filename)
 
 
 exit(0)
