@@ -20,8 +20,11 @@ def python_object_load(filename):
         obj2 = pickle.load(file_r)
         file_r.close()
     except:
-        file_r.close()
-        return None
+        try:
+            file_r.close()
+            return None
+        except:
+            return None
     return obj2
 
 def make_empty_storage():
