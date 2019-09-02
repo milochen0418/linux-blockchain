@@ -15,13 +15,13 @@ def python_object_load(filename):
     import os
     import time
     import pickle
-	 try:
-	     file_r = open(filename, "rb")
-	     obj2 = pickle.load(file_r)
-	     file_r.close()
-	 except:
-		  file_r.close()
-		  return None
+    try:
+        file_r = open(filename, "rb")
+        obj2 = pickle.load(file_r)
+        file_r.close()
+    except:
+        file_r.close()
+        return None
     return obj2
 
 def make_empty_storage():
@@ -32,7 +32,7 @@ def make_empty_storage():
 
 def Execute(filename):
 	
-	 storage = python_object_load(filename)
+    storage = python_object_load(filename)
     if storage == None:
         storage = make_empty_storage()
 
