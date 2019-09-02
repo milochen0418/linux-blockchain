@@ -26,27 +26,23 @@ def python_object_load(filename):
         except:
             return None
     return obj2
-
+storage_name = 'storage.bytes' 
 def make_empty_storage():
     storage = {}
-    python_object_dump(storage, 'storage.bytes')
+    python_object_dump(storage, storage_name)
     return storage
     pass
 
 def Execute(filename):
-    storage = python_object_load('storage.bytes')
+    storage = python_object_load(storage_name)
     if storage == None:
         storage = make_empty_storage()
     
-    print('start of exec')
     readcode = open(filename,"rb").read()
     execCodeObject = compile(readcode, '<string>', 'exec')
     executeCodeBlock = exec(execCodeObject)
-    print('end of exec')
-    print('storage = ', storage)
-    python_object_dump(storage, 'storage.bytes')
-    loaded_pyobj = python_object_load('storage.bytes')
-    print('loaded_pyobj = ', loaded_pyobj)
+    python_object_dump(storage, storage_name)
+
     pass
 
 
