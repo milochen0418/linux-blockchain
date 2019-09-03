@@ -1,7 +1,7 @@
 # This is python contract-executor
 import os
 import pickle
-
+import json 
 def python_object_dump(obj, filename):
     import os
     import time
@@ -36,7 +36,7 @@ def make_empty_storage():
     return storage
     pass
 
-def Execute(filename):
+def Execute(filename, **kwargs):
     storage = python_object_load(storage_name)
     if storage == None:
         storage = make_empty_storage()
@@ -45,12 +45,16 @@ def Execute(filename):
     execCodeObject = compile(readcode, '<string>', 'exec')
     executeCodeBlock = exec(execCodeObject)
     python_object_dump(storage, storage_name)
-
     pass
 
+def ExecuteFromJson(filename, jsonrpc)
+    jsondict = json.loads(jsonrpc)
+    print(jsondict['age'])
 
-Execute(contract_filename)
 
+#Execute(contract_filename)
+jsonrpc = '{ "name":"John", "age":30, "city":"New York"}'
+ExecuteFromJson(contract_filename, jsonrpc)
 
 exit(0)
 
