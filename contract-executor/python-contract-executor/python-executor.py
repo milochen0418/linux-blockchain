@@ -42,12 +42,12 @@ def Execute(filename, **kwargs):
         storage = make_empty_storage()
     
     readcode = open(filename,"rb").read()
-    execCodeObject = compile(readcode, '<string>', 'exec')
+    execCodeObject = compile(readcode, '<string>', 'exec func=123')
     executeCodeBlock = exec(execCodeObject)
     python_object_dump(storage, storage_name)
     pass
 
-def ExecuteFromJson(filename, jsonrpc)
+def ExecuteFromJson(filename, jsonrpc):
     jsondict = json.loads(jsonrpc)
     print(jsondict['age'])
 

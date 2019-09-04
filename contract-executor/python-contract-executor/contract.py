@@ -11,3 +11,11 @@ print(storage)
 
 print("Turning-Complete")
 
+def contract_function():
+    print('invoked contract_function')
+
+
+if 'func' in kwargs:
+    print(kwargs['func'])
+
+
