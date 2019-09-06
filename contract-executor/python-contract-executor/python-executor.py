@@ -1,7 +1,9 @@
 # This is python contract-executor
 import os
 import pickle
-import json 
+import json
+import inspect
+
 def python_object_dump(obj, filename):
     import os
     import time
@@ -47,14 +49,36 @@ def Execute(filename, **kwargs):
     python_object_dump(storage, storage_name)
     pass
 
+def end_of_read_contract():
+    print('call end of read contract()')
+    contract_instance = SmartContract() 
+    #f = getattr(contract_instance, 'do_function_void')
+    #f()
+    pass
+ 
 def ExecuteFromJson(filename, jsonrpc):
+    storage = python_object_load(storage_name)
+    if storage == None:
+        storage = make_empty_storage()
+    Source_end_of_read_contract = inspect.getsource(end_of_read_contract)
     jsondict = json.loads(jsonrpc)
-    print(jsondict['age'])
+    
+    readcode = open(filename,"rb").read()
+    #readcode = r"{}\n{}".format(Source_end_of_read_contract, readcode)
+    print(readcode)
+
+
+    execCodeObject = compile(readcode, '<string>', 'exec')
+    executeCodeBlock = exec(execCodeObject)
+
 
 
 #Execute(contract_filename)
-jsonrpc = '{ "name":"John", "age":30, "city":"New York"}'
+#jsonrpc = '{ "name":"John", "age":300, "city":"New York"}'
+
+jsonrpc = '{"func":"do_function_void" }'
 ExecuteFromJson(contract_filename, jsonrpc)
+jsonrpc = '{"func":"do_function_void" }'
 
 exit(0)
 
