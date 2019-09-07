@@ -69,18 +69,8 @@ def ExecuteFromJson(filename, jsonrpc):
     exec_code = open(executable_contract_filename,"a+") #append
 
     exec_code.write("\ninst = SmartContract()\n")
-    exec_code.write("inst.do_function_void()\n")
-    exec_code.write("f=getattr(inst,'do_function_void')\n")
-    exec_code.write("f()\n")
-    """
-    exec_code.write("\n")
-    exec_code.write('def exec_func():\n')
-    exec_code.write('    inst = SmartContract()\n')
-    exec_code.write("    f = getattr(contract_inst,'do_function_void')\n")
-    exec_code.write("    f()\n")
-    exec_code.write("exec_func()\n")
-    """
-   
+    exec_code.write("inst.{}()\n".format(jsondict['func']))
+
     exec_code.close()
     
 
