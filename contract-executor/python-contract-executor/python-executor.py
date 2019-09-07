@@ -3,7 +3,7 @@ import os
 import pickle
 import json
 import inspect
-
+from shutil import copyfile
 def python_object_dump(obj, filename):
     import os
     import time
@@ -31,6 +31,7 @@ def python_object_load(filename):
 
 storage_name = 'storage.bytes'
 contract_filename = 'contract.py'
+executable_contract_filename = 'exec_contract.py'
 
 def make_empty_storage():
     storage = {}
@@ -62,16 +63,18 @@ def ExecuteFromJson(filename, jsonrpc):
         storage = make_empty_storage()
     Source_end_of_read_contract = inspect.getsource(end_of_read_contract)
     jsondict = json.loads(jsonrpc)
-    
-    readcode = open(filename,"rb").read()
+    copyfile(filename, executable_contract_filename)
+
+    exec_code = open(executable_contract_filename,"a+") #append
+    exec_code.write("\nprint('Test Executable Contract')\n")
+    exec_code.close()
+    #readcode = open(filename,"rb").read()
+    readcode = open(executable_contract_filename,"rb").read()
     #readcode = r"{}\n{}".format(Source_end_of_read_contract, readcode)
-    print(readcode)
-
-
+    #print(readcode)
     execCodeObject = compile(readcode, '<string>', 'exec')
     executeCodeBlock = exec(execCodeObject)
-
-
+    #readcode.close()
 
 #Execute(contract_filename)
 #jsonrpc = '{ "name":"John", "age":300, "city":"New York"}'

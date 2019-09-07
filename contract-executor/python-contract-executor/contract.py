@@ -1,25 +1,3 @@
-
-"""
-for i in range(10):
-    print(i,end=', ')
-print('')
-
-if 'exec_count' not in storage.keys():
-    storage['exec_count'] = 0
-
-for i in range(5):
-    storage['exec_count'] = storage['exec_count'] + 1
-print(storage)
-
-print("Turning-Complete")
-
-def contract_function():
-    print('invoked contract_function')
-"""
-
-
-#for key in kwargs.keys():
-#    print(key,'->',kwargs[key])
 class SmartContract:
     def __init__(self):
         self.x = 33
@@ -37,6 +15,6 @@ def end_of_read_contract():
     pass
  
 
-end_of_read_contract()
+#end_of_read_contract()
 
 
