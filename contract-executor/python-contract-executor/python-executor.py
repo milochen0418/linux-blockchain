@@ -3,6 +3,7 @@ import os
 import pickle
 import json
 import inspect
+import time
 from shutil import copyfile
 def python_object_dump(obj, filename):
     import os
@@ -63,18 +64,29 @@ def ExecuteFromJson(filename, jsonrpc):
         storage = make_empty_storage()
     Source_end_of_read_contract = inspect.getsource(end_of_read_contract)
     jsondict = json.loads(jsonrpc)
+    
     copyfile(filename, executable_contract_filename)
-
     exec_code = open(executable_contract_filename,"a+") #append
-    exec_code.write("\nprint('Test Executable Contract')\n")
+
+    exec_code.write("\ninst = SmartContract()\n")
+    exec_code.write("inst.do_function_void()\n")
+    exec_code.write("f=getattr(inst,'do_function_void')\n")
+    exec_code.write("f()\n")
+    """
+    exec_code.write("\n")
+    exec_code.write('def exec_func():\n')
+    exec_code.write('    inst = SmartContract()\n')
+    exec_code.write("    f = getattr(contract_inst,'do_function_void')\n")
+    exec_code.write("    f()\n")
+    exec_code.write("exec_func()\n")
+    """
+   
     exec_code.close()
-    #readcode = open(filename,"rb").read()
+    
+
     readcode = open(executable_contract_filename,"rb").read()
-    #readcode = r"{}\n{}".format(Source_end_of_read_contract, readcode)
-    #print(readcode)
     execCodeObject = compile(readcode, '<string>', 'exec')
     executeCodeBlock = exec(execCodeObject)
-    #readcode.close()
 
 #Execute(contract_filename)
 #jsonrpc = '{ "name":"John", "age":300, "city":"New York"}'
