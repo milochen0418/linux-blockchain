@@ -59,16 +59,19 @@ def end_of_read_contract():
     pass
  
 def ExecuteFromJson(filename, jsonrpc):
+
     storage = python_object_load(storage_name)
     if storage == None:
         storage = make_empty_storage()
+        
+
     Source_end_of_read_contract = inspect.getsource(end_of_read_contract)
     jsondict = json.loads(jsonrpc)
     
     copyfile(filename, executable_contract_filename)
     exec_code = open(executable_contract_filename,"a+") #append
 
-    exec_code.write("\ninst = SmartContract()\n")
+    exec_code.write("\ninst = SmartContract(storage)\n")
     exec_code.write("inst.{}()\n".format(jsondict['func']))
 
     exec_code.close()
@@ -77,6 +80,9 @@ def ExecuteFromJson(filename, jsonrpc):
     readcode = open(executable_contract_filename,"rb").read()
     execCodeObject = compile(readcode, '<string>', 'exec')
     executeCodeBlock = exec(execCodeObject)
+
+    python_object_dump(storage, storage_name)
+    print(storage)
 
 #Execute(contract_filename)
 #jsonrpc = '{ "name":"John", "age":300, "city":"New York"}'
