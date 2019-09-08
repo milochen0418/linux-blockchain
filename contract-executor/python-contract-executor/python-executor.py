@@ -90,11 +90,14 @@ def ExecuteFromJson(filename, jsonrpc):
 
 # Test Code for python-executor.py with test contract contract.py
 #jsonrpc = '{ "name":"John", "age":300, "city":"New York"}'
-jsonrpc = '{"func":"do_function_void" }'
-ExecuteFromJson(contract_filename, jsonrpc)
-jsonrpc = '{"func":"do_function_one_arg", "arg1":"Hello World" }'
-ExecuteFromJson(contract_filename, jsonrpc)
-
+def run_test_case():
+    jsonrpc = '{"func":"do_function_void" }'
+    ExecuteFromJson(contract_filename, jsonrpc)
+    jsonrpc = '{"func":"do_function_one_arg", "arg1":"Hello World" }'
+    ExecuteFromJson(contract_filename, jsonrpc)
+    jsonrpc = '{"func":"func_with_args", "argNum":345, "argStr":"MyString"}'
+    ExecuteFromJson(contract_filename, jsonrpc)
+run_test_case()
 exit(0)
 
 

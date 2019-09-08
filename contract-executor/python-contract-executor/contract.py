@@ -12,5 +12,8 @@ class SmartContract:
         print(self.storage)
     def do_function_one_arg(self,arg1):
         print('invoke do_function_one_arg({})'.format( arg1))
+    def func_with_args(self, argNum, argStr):
+        print('argNum = ', argNum)
+        print('argStr = ', argStr)
 
 
