@@ -2,22 +2,14 @@
 import os
 import pickle
 import json
-import inspect
-import time
 from shutil import copyfile
 def python_object_dump(obj, filename):
-    import os
-    import time
-    import pickle
     file_w = open(filename, "wb")
     pickle.dump(obj, file_w)
     file_w.close()
 
 
 def python_object_load(filename):
-    import os
-    import time
-    import pickle
     try:
         file_r = open(filename, "rb")
         obj2 = pickle.load(file_r)
@@ -51,42 +43,36 @@ def Execute(filename, **kwargs):
     python_object_dump(storage, storage_name)
     pass
 
-def end_of_read_contract():
-    print('call end of read contract()')
-    contract_instance = SmartContract() 
-    #f = getattr(contract_instance, 'do_function_void')
-    #f()
-    pass
- 
+
 def ExecuteFromJson(filename, jsonrpc):
 
+    # Procedure to load storage
     storage = python_object_load(storage_name)
     if storage == None:
         storage = make_empty_storage()
         
-
-    Source_end_of_read_contract = inspect.getsource(end_of_read_contract)
+    # Convert jsonRPC into python dictionary
     jsondict = json.loads(jsonrpc)
-    
+
+    # Wrap the smart contract to be execuatable smart contract, 
+    # so that it can be executed
     copyfile(filename, executable_contract_filename)
     exec_code = open(executable_contract_filename,"a+") #append
-
     exec_code.write("\ninst = SmartContract(storage)\n")
     exec_code.write("inst.{}()\n".format(jsondict['func']))
-
     exec_code.close()
     
-
+    # To execute the executable smart contract
     readcode = open(executable_contract_filename,"rb").read()
     execCodeObject = compile(readcode, '<string>', 'exec')
     executeCodeBlock = exec(execCodeObject)
-
+    
+    # Procedure to save storage 
     python_object_dump(storage, storage_name)
-    print(storage)
 
-#Execute(contract_filename)
+
+# Test Code for python-executor.py with test contract contract.py
 #jsonrpc = '{ "name":"John", "age":300, "city":"New York"}'
-
 jsonrpc = '{"func":"do_function_void" }'
 ExecuteFromJson(contract_filename, jsonrpc)
 jsonrpc = '{"func":"do_function_void" }'
