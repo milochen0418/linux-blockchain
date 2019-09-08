@@ -8,7 +8,7 @@ class SmartContract:
             self.storage['cnt'] = 0
         else:
             self.storage['cnt'] += 1
-        # show stroage data
+        # show storage data
         print(self.storage)
     def do_function_one_arg(self,arg1):
         print('invoke do_function_one_arg({})'.format( arg1))
