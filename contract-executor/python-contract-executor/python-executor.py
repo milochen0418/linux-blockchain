@@ -2,6 +2,7 @@
 import os
 import pickle
 import json
+import sys
 from shutil import copyfile
 def python_object_dump(obj, filename):
     file_w = open(filename, "wb")
@@ -97,7 +98,19 @@ def run_test_case():
     ExecuteFromJson(contract_filename, jsonrpc)
     jsonrpc = '{"func":"func_with_args", "argNum":345, "argStr":"MyString"}'
     ExecuteFromJson(contract_filename, jsonrpc)
-run_test_case()
-exit(0)
+def run_contract_by_jsonrpc(jsonrpc):
+    ExecuteFromJson(contract_filename, jsonrpc)
+
+if __name__=="__main__":
+    #run_test_case()
+    #print(sys.argv)
+    if len(sys.argv) == 1:
+        run_test_case()
+    elif len(sys.argv) == 2:
+        run_contract_by_jsonrpc(sys.argv[1])
+        #python python-executor.py '{"func":"do_function_void" }'
+        #python python-executor.py '{"func":"do_function_one_arg", "arg1":"Hello World" }'
+        #python python-executor.py '{"func":"func_with_args", "argNum":345, "argStr":"MyString"}'
+    exit(0)
 
 
