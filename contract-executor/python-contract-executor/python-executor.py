@@ -59,7 +59,24 @@ def ExecuteFromJson(filename, jsonrpc):
     copyfile(filename, executable_contract_filename)
     exec_code = open(executable_contract_filename,"a+") #append
     exec_code.write("\ninst = SmartContract(storage)\n")
-    exec_code.write("inst.{}()\n".format(jsondict['func']))
+    func = jsondict['func']
+    arg_list = []
+    for arg_name in jsondict.keys():
+        if arg_name == 'func':
+            continue
+        arg_val = jsondict[arg_name]
+        if type(arg_val) == str:
+            readable_val = "'{}'".format(arg_val)
+        else:
+            readable_val = arg_val
+        arg_list.append("{} = {}".format(arg_name, readable_val))
+    arg_list_str = ""
+    for v in arg_list:
+        if arg_list_str == "":
+            arg_list_str = v
+        else:
+            arg_list_str = "{},{}".format(arg_list_str, v)
+    exec_code.write("inst.{}({})\n".format(func ,arg_list_str))
     exec_code.close()
     
     # To execute the executable smart contract
@@ -75,7 +92,8 @@ def ExecuteFromJson(filename, jsonrpc):
 #jsonrpc = '{ "name":"John", "age":300, "city":"New York"}'
 jsonrpc = '{"func":"do_function_void" }'
 ExecuteFromJson(contract_filename, jsonrpc)
-jsonrpc = '{"func":"do_function_void" }'
+jsonrpc = '{"func":"do_function_one_arg", "arg1":"Hello World" }'
+ExecuteFromJson(contract_filename, jsonrpc)
 
 exit(0)
 
