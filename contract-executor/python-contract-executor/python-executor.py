@@ -109,6 +109,6 @@ if __name__=="__main__":
     elif len(sys.argv) == 2:
         run_contract_by_jsonrpc(sys.argv[1])
         # To refer cmd example, you can read the code in  cmd-test.sh
-   exit(0)
+    exit(0)
 
 
