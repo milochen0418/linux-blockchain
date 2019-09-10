@@ -4,6 +4,75 @@ import pickle
 import json
 import sys
 from shutil import copyfile
+
+
+from threading import Thread
+from flask import Flask
+from flask import jsonify
+from flask import render_template
+from flask import send_from_directory
+flask_app = Flask(__name__)
+
+class Env():
+    DISABLE_FLASK_APP_LOG = True #Set true , then you will not see http post log
+
+#Dssable flask log
+if Env.DISABLE_FLASK_APP_LOG == True :
+    import logging
+    flask_app.logger.disabled = True
+    log = logging.getLogger('werkzeug')
+    log.disabled = True
+
+flask_app.jinja_env.auto_reload = True
+flask_app.config['TEMPLATES_AUTO_RELOAD'] = True
+import logging
+flask_app.logger.disabled = True
+@flask_app.after_request
+def add_header(r):
+    """
+    Add headers to both force latest IE rendering engine or Chrome Frame,
+    and also to cache the rendered page for 10 minutes.
+    """
+    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    r.headers["Pragma"] = "no-cache"
+    r.headers["Expires"] = "0"
+    r.headers['Cache-Control'] = 'public, max-age=0'
+    return r
+
+@flask_app.route('/js/<path:path>')
+def send_js(path):
+    return send_from_directory('js',path)
+
+@flask_app.route('/css/<path:path>')
+def send_css(path):
+    return send_from_directory('css',path)
+
+@flask_app.route('/')
+def index_page():
+    return render_template('index.html')
+
+@flask_app.route('/test/')
+def test_page():
+    return render_template('test.html')
+
+
+class WebServerThread(Thread):
+    global serverThread
+
+    def __init__(self):
+        Thread.__init__(self)
+    def run(self):
+        while True:
+            print('Flask web server start()')
+            flask_app.jinja_env.auto_reload = True
+            flask_app.config['TEMPLATES_AUTO_RELOAD'] = True
+            flask_app.run(host='0.0.0.0', port=5656, debug=False)
+            print('Flask web server stop()')
+
+
+
+
+
 def python_object_dump(obj, filename):
     file_w = open(filename, "wb")
     pickle.dump(obj, file_w)
@@ -109,6 +178,13 @@ if __name__=="__main__":
     elif len(sys.argv) == 2:
         run_contract_by_jsonrpc(sys.argv[1])
         # To refer cmd example, you can read the code in  cmd-test.sh
-    exit(0)
+
+    Web_ServerThread = WebServerThread()
+    Web_ServerThread.start()
+    print('Browser open http://localhost:5656/ . It\'s mapping to template/index.html')
+    print('Browser open http://localhost:5656/test/ . It\'s mapping to template/test.html')
+    #sys.exit(flask_app.exec_())
+    
+    #exit(0)
 
 

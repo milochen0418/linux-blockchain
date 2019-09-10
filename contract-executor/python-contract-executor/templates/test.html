@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>HTML test</title>
+  <meta charset="utf-8">
+  <link href='http://blog.pulipuli.info/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+<script>
+  $(document).ready(function() {
+  	$("#myButton").click(function() { 
+  		$("#helloWorldDiv").html("jQuery Hello world example"); 
+
+  	});
+
+  	$('#Btn1').click( function(){
+  		$('#greenbar').css("width",'20%');
+  		
+  	});
+
+  	$('#Btn2').click( function(){
+  		$('#greenbar').css("width",'40%');
+  		
+  	});
+
+  	$('#Btn3').click( function(){
+		$('#greenbar').css("width",'80%');
+  	});
+
+});  
+
+
+</script>
+</head>
+<body>    
+<div id='test'>
+  <h1>test.html</h1>
+	<button id="myButton" class="btn btn-primary">Print Hello World</button>
+	<button id="Btn1" class="btn btn-primary">Btn1</button>
+	<button id="Btn2" class="btn btn-primary">Btn2</button>
+	<button id="Btn3" class="btn btn-primary">Btn3</button>
+	</br>
+	<button id="BtnA" class="btn btn-primary">BtnA</button>
+	<button id="BtnB" class="btn btn-primary">BtnB</button>
+	<button id="BtnC" class="btn btn-primary">BtnC - invoke AI</button>
+</div>
+
+</body>
+
+</html>
