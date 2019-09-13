@@ -15,6 +15,9 @@ There are many kind new smart contract can be added in this linux-blockchain, bu
 ### smart contract module
 The linux-blockchain can support different smart contract (mean different computer program). You can use their corresponding contract-executor to execute it. For now, we support python smart contract and python contract executor first.
 
+### remix IDE module
+remix IDE is a nice tool from Ethereum. Today, when we say write smart contract on the Web online IDE, it is mean Remix IDE. To write smart contract on web IDE is a nice idea.  And the IDE  that support all kind of testing operation on smart contract is a good point.   
+
 ### distributed data storage module
 Many account model blockchain can save all record of state chaning and show current state in different account. The program in smart contract is like to make a state machine with this storage. So different distributed data storage should try to support these smart contract. The input of distributed data storage are smart contract executing and consensus algorithm. It should know how to sync data for different node. The output of distributed storage is a trust and managed datas of all account.
 
