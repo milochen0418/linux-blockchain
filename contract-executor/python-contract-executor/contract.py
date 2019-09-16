@@ -4,7 +4,7 @@ class SmartContract:
         pass
 
     def do_function_void(self):
-        print('do_function()')
+        print('do_function_void()')
         if 'cnt' not in self.storage.keys():
             self.storage['cnt'] = 0
         else:

@@ -11,10 +11,11 @@ from flask import Flask
 from flask import jsonify
 from flask import render_template
 from flask import send_from_directory
+from flask import request
 flask_app = Flask(__name__)
 
 class Env():
-    DISABLE_FLASK_APP_LOG = True #Set true , then you will not see http post log
+    DISABLE_FLASK_APP_LOG = False #Set true , then you will not see http post log
 
 #Dssable flask log
 if Env.DISABLE_FLASK_APP_LOG == True :
@@ -50,6 +51,54 @@ def send_css(path):
 @flask_app.route('/')
 def index_page():
     return render_template('index.html')
+
+#, methods=['GET', 'POST']
+@flask_app.route('/transaction', methods=['POST'])
+def transaction_route():
+    print('transaction_route() is invoked')
+    try:
+        if request.method == 'POST':
+            #data = request.get_json()
+            data = request.get_json(force=True)
+            print('Data Received: "{data}"'.format(data=data))
+            return "Request Processed.\n"
+    except Exception as e: 
+        print(e)        
+# curl localhost:5656/transaction -d '{"foo": "bar"}' -H 'Content-Type: application/json'
+
+@flask_app.route('/post', methods=['POST'])
+def post_route():
+    print('post_route() is invoked')
+    try:
+        if request.method == 'POST':
+            print('request.method == POST')
+            #data = request.get_json()
+            data = request.get_json(force=True)
+            print('Data Received: "{data}"'.format(data=data))
+            return "Request Processed.\n"
+    except Exception as e: 
+        print(e)        
+# curl localhost:5656/post -d '{"foo": "bar"}' -H 'Content-Type: application/json'
+
+
+
+@flask_app.route('/trans/<uid>')
+def trans(uid):
+    print('uid = ', uid)
+    return ''
+
+@flask_app.route('/trans2/')
+def trans2():
+    print('trans2() is invoked')
+    if request.method == 'GET':
+        print('this is get')
+    elif request.method == 'POST':
+        print('this is post')
+    else:
+        print('unknown request.method')
+    
+    return ''
+
 
 @flask_app.route('/test/')
 def test_page():

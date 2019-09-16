@@ -16,7 +16,30 @@
   	});
 
   	$('#Btn1').click( function(){
-  		$('#greenbar').css("width",'20%');
+      $('#greenbar').css("width",'20%');
+      console.log('Btn1 is click')
+      var markers = [
+        { "func": "128.3657142857143", "markerPosition": "7" },
+        { "position": "235.1944023323615", "markerPosition": "19" },
+        { "position": "42.5978231292517", "markerPosition": "-3" }
+      ];
+
+      $.ajax({
+        type: "POST",        
+        url: "/transaction",
+        // The key needs to match your method's input parameter (case-sensitive).
+        //data: JSON.stringify({ Markers: markers }),
+        data: JSON.stringify({Markers: markers}),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function(data){
+          alert(data);
+        },
+        failure: function(errMsg) {
+          alert(errMsg);
+        }
+      });
+
   		
   	});
 
@@ -42,7 +65,7 @@
 	<button id="Btn2" class="btn btn-primary">Btn2</button>
 	<button id="Btn3" class="btn btn-primary">Btn3</button>
 	</br>
-	<button id="BtnA" class="btn btn-primary">BtnA</button>
+	<button id="Transaction do_function_void()" class="btn btn-primary">BtnA</button>
 	<button id="BtnB" class="btn btn-primary">BtnB</button>
 	<button id="BtnC" class="btn btn-primary">BtnC - invoke AI</button>
 </div>
