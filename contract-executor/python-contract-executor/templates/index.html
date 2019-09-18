@@ -14,7 +14,26 @@
   		$("#helloWorldDiv").html("jQuery Hello world example"); 
 
   	});
+    $('#do_function_void_Btn').click(function(){
+      console.log('do_function_void_Btn')
+      var json_obj = {"func":"do_function_void" };
 
+      $.ajax({
+        type: "POST",        
+        url: "/transaction",
+        data: JSON.stringify(json_obj),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function(data){
+          alert(data);
+        },
+        failure: function(errMsg) {
+          alert(errMsg);
+        }
+      });
+
+    });
+    
   	$('#Btn1').click( function(){
       $('#greenbar').css("width",'20%');
       console.log('Btn1 is click')
@@ -60,7 +79,7 @@
 <body>    
 <div id='test'>
   <h1>index.html</h1>
-	<button id="myButton" class="btn btn-primary">Print Hello World</button>
+	<button id="do_function_void_Btn" class="btn btn-primary">do_function_void_Btn</button>
 	<button id="Btn1" class="btn btn-primary">Btn1</button>
 	<button id="Btn2" class="btn btn-primary">Btn2</button>
 	<button id="Btn3" class="btn btn-primary">Btn3</button>

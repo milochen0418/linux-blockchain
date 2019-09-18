@@ -52,6 +52,15 @@ def send_css(path):
 def index_page():
     return render_template('index.html')
 
+
+storage_name = 'storage.bytes'
+contract_filename = 'contract.py'
+executable_contract_filename = 'exec_contract.py'
+
+
+#jsonrpc = '{"func":"do_function_void" }'
+#ExecuteFromJson(contract_filename, jsonrpc)
+
 #, methods=['GET', 'POST']
 @flask_app.route('/transaction', methods=['POST'])
 def transaction_route():
@@ -61,6 +70,11 @@ def transaction_route():
             #data = request.get_json()
             data = request.get_json(force=True)
             print('Data Received: "{data}"'.format(data=data))
+            #print('type of data is ', type(data))
+            #convert json data, with type of dict, into json str type.
+            jsonrpc_str = json.dumps(data)
+            #print('type of data is ', type(app_json))
+            ExecuteFromJson(contract_filename, jsonrpc_str)
             return "Request Processed.\n"
     except Exception as e: 
         print(e)        
@@ -74,7 +88,9 @@ def post_route():
             print('request.method == POST')
             #data = request.get_json()
             data = request.get_json(force=True)
+            
             print('Data Received: "{data}"'.format(data=data))
+
             return "Request Processed.\n"
     except Exception as e: 
         print(e)        
@@ -141,9 +157,6 @@ def python_object_load(filename):
             return None
     return obj2
 
-storage_name = 'storage.bytes'
-contract_filename = 'contract.py'
-executable_contract_filename = 'exec_contract.py'
 
 def make_empty_storage():
     storage = {}
@@ -170,7 +183,7 @@ def ExecuteFromJson(filename, jsonrpc):
     if storage == None:
         storage = make_empty_storage()
         
-    # Convert jsonRPC into python dictionary
+    # Convert jsonRPC str type into python dictionary
     jsondict = json.loads(jsonrpc)
 
     # Wrap the smart contract to be execuatable smart contract, 
