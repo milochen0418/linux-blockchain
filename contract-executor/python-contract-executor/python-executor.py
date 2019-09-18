@@ -191,6 +191,10 @@ def ExecuteFromJson(filename, jsonrpc):
     copyfile(filename, executable_contract_filename)
     exec_code = open(executable_contract_filename,"a+") #append
     exec_code.write("\ninst = SmartContract(storage)\n")
+    if 'func' not in jsondict.keys():
+        print('ExecuteFromJson: no func attribte')
+        return 
+
     func = jsondict['func']
     arg_list = []
     for arg_name in jsondict.keys():

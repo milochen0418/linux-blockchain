@@ -14,10 +14,63 @@
   		$("#helloWorldDiv").html("jQuery Hello world example"); 
 
   	});
-    $('#do_function_void_Btn').click(function(){
-      console.log('do_function_void_Btn')
-      var json_obj = {"func":"do_function_void" };
+    function post_transaction(jsonrpc){
+      $.ajax({
+        type: "POST",        
+        url: "/transaction",
+        data: JSON.stringify(jsonrpc),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function(data){
+          alert(data);
+        },
+        failure: function(errMsg) {
+          alert(errMsg);
+        }
+      });      
+    }    
+    
+/*
+    def do_function_void(self):
+    def do_function_one_arg(self,arg1):
+    def func_with_args(self, argNum, argStr):
+    def storage_setter(self, KeyStr, Value):
+    def storage_getter(self, KeyStr):
+*/
 
+    $('#do_function_void_Btn').click(function(){
+      console.log($(this).attr('id')+' clicked');
+      var json_obj = {"func":"do_function_void" };
+      post_transaction(json_obj);
+    });
+    $('#do_function_one_arg_Btn').click(function(){
+      console.log($(this).attr('id')+' clicked');
+      var json_obj = {"func":"do_function_one_arg","arg1":333 };
+      post_transaction(json_obj);
+    });
+    $('#func_with_args_Btn').click(function(){
+      console.log($(this).attr('id')+' clicked');
+      var json_obj = {"func":"func_with_args","argNum":353,"argStr":"StrMilo" };
+      post_transaction(json_obj);
+    });
+    $('#storage_setter_Btn').click(function(){
+      console.log($(this).attr('id')+' clicked');
+      var json_obj = {"func":"storage_setter","KeyStr":"Web-front-end","Value":3344 };
+      post_transaction(json_obj);
+    });
+    $('#storage_getter_Btn').click(function(){
+      console.log($(this).attr('id')+' clicked');
+      var json_obj = {"func":"storage_getter","KeyStr":"Web-front-end"};
+      post_transaction(json_obj);
+    });
+
+
+
+
+    
+  	$('#JsonrpcTestBtn').click( function(){
+      console.log('JsonrpcTestBtn is click')
+      var json_obj = { "func": "qoo_function", "markerPosition": "7" }
       $.ajax({
         type: "POST",        
         url: "/transaction",
@@ -31,45 +84,8 @@
           alert(errMsg);
         }
       });
-
     });
-    
-  	$('#Btn1').click( function(){
-      $('#greenbar').css("width",'20%');
-      console.log('Btn1 is click')
-      var markers = [
-        { "func": "128.3657142857143", "markerPosition": "7" },
-        { "position": "235.1944023323615", "markerPosition": "19" },
-        { "position": "42.5978231292517", "markerPosition": "-3" }
-      ];
-
-      $.ajax({
-        type: "POST",        
-        url: "/transaction",
-        // The key needs to match your method's input parameter (case-sensitive).
-        //data: JSON.stringify({ Markers: markers }),
-        data: JSON.stringify({Markers: markers}),
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function(data){
-          alert(data);
-        },
-        failure: function(errMsg) {
-          alert(errMsg);
-        }
-      });
-
   		
-  	});
-
-  	$('#Btn2').click( function(){
-  		$('#greenbar').css("width",'40%');
-  		
-  	});
-
-  	$('#Btn3').click( function(){
-		$('#greenbar').css("width",'80%');
-  	});
 
 });  
 
@@ -79,14 +95,24 @@
 <body>    
 <div id='test'>
   <h1>index.html</h1>
-	<button id="do_function_void_Btn" class="btn btn-primary">do_function_void_Btn</button>
-	<button id="Btn1" class="btn btn-primary">Btn1</button>
-	<button id="Btn2" class="btn btn-primary">Btn2</button>
-	<button id="Btn3" class="btn btn-primary">Btn3</button>
-	</br>
-	<button id="Transaction do_function_void()" class="btn btn-primary">BtnA</button>
-	<button id="BtnB" class="btn btn-primary">BtnB</button>
-	<button id="BtnC" class="btn btn-primary">BtnC - invoke AI</button>
+  <pre>
+    def do_function_void(self):
+    def do_function_one_arg(self,arg1):
+    def func_with_args(self, argNum, argStr):
+    def storage_setter(self, KeyStr, Value):
+    def storage_getter(self, KeyStr):
+  </pre>
+
+	<button id="do_function_void_Btn" class="btn btn-primary">do_function_void_Btn</button><br>
+  <button id="do_function_one_arg_Btn" class="btn btn-primary">do_function_one_arg_Btn</button><br>
+  <button id="func_with_args_Btn" class="btn btn-primary">func_with_args_Btn</button><br>
+  <button id="storage_setter_Btn" class="btn btn-primary">storage_setter_Btn</button><br>
+  <button id="storage_getter_Btn" class="btn btn-primary">storage_getter_Btn</button><br>
+
+  
+	<button id="JsonrpcTestBtn" class="btn btn-primary">JsonrpcTestBtn</button>
+  <br>
+
 </div>
 
 </body>
